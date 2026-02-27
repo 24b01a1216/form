@@ -8,7 +8,10 @@ def reg(request):
     if request.method == 'POST':
         form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
-            Student.objects.create(
+            if Student.objects.filter(roll_number=form.cleaned_data['roll_number']).exists():
+                form.add_error('roll_number', 'Roll number already exists')
+            else:
+                Student.objects.create(
                 full_name=form.cleaned_data['full_name'],
                 email=form.cleaned_data['email'],
                 mobile=form.cleaned_data['mobile'],
