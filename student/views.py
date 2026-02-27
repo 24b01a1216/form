@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Student
 from .forms import StudentForm
 
 
@@ -7,7 +8,7 @@ def reg(request):
     if request.method == 'POST':
         form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
-            StudentForm.objects.create(
+            Student.objects.create(
                 full_name=form.cleaned_data['full_name'],
                 email=form.cleaned_data['email'],
                 mobile=form.cleaned_data['mobile'],
